@@ -2,7 +2,9 @@
     "name": "walter-test",
     "dependencies": {
         "react": "^16.12.0",
-        "react-dom": "^16.12.0"
+        "react-dom": "^16.12.0",
+        "react-router-dom": "^5.1.2",
+        "tailwindcss": "^1.1.4"
     },
     "devDependencies": {
         "@testing-library/react": "^9.3.3",
