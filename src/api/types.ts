@@ -8,10 +8,7 @@ export interface IndexableRecord {
     id?: ID
 }
 
-export type MapOf<
-    Record extends IndexableRecord,
-    Key extends string = string
-> = {
+export type MapOf<Record, Key extends string | number | symbol = string> = {
     [key in Key]: Record
 }
 

@@ -1,27 +1,35 @@
-import { useContext, createContext, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { fetchPersistedAuthenticationState } from '../api'
 import { useLocation, useHistory } from 'react-router'
-
-export const UserContext = createContext(null)
-
-export const useUser = () => {
-    return useContext(UserContext)
-}
+import { User } from '../api/types'
+import { contextFromHook } from '../utils/context'
 
 export const pageRequiresAuthentication = (page: string) =>
     !page.includes('login')
 
-const useFetchAuthentication = () => {
-    const location = useLocation()
-    const history = useHistory()
+const fetchAuthentication = ({ location, history, setUser }) => {
     const user = fetchPersistedAuthenticationState()
+    setUser(user)
     if (!user && pageRequiresAuthentication(location.pathname)) {
-        history.replace('/')
+        history.replace('/login')
     }
 }
 
-export const useAuthenticationState = () => {
+export const UserContext = contextFromHook(() => {
+    const [user, setUser] = useState<User>(null)
+    return {
+        user,
+        setUser,
+    }
+})
+
+export const useAuthentication = () => {
+    const location = useLocation()
+    const history = useHistory()
+    const { setUser } = UserContext.use()
+
+    // fetch Authentication
     useEffect(() => {
-        useFetchAuthentication()
-    })
+        fetchAuthentication({ location, history, setUser })
+    }, [])
 }

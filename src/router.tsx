@@ -1,24 +1,26 @@
 import * as React from 'react'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { createBrowserHistory } from 'history'
+import { Router, Route, Switch } from 'react-router-dom'
 import { Login } from './auth/Login'
 import { Dashboard } from './dashboard/Dashboard'
-import { Todos } from './dashboard/todos/Todos'
-import { useAuthenticationState } from './auth/user'
+import { useAuthentication, UserContext } from './auth/user'
 
-export const Router = () => {
-    console.log('component')
-    useAuthenticationState()
+export const Startup = ({ children }) => {
+    useAuthentication()
+    return children
+}
+
+export const App = ({ history = createBrowserHistory() }) => {
     return (
-        <BrowserRouter>
-            <Route path="login">
-                <Login />
-            </Route>
-            <Route path="/dashboard">
-                <Dashboard />
-            </Route>
-            <Route path="/dashboard/todo">
-                <Todos></Todos>
-            </Route>
-        </BrowserRouter>
+        <Router history={history}>
+            <UserContext.Provider>
+                <Startup>
+                    <Switch>
+                        <Route path="/login" component={Login}></Route>
+                        <Route path="/dashboard" component={Dashboard}></Route>
+                    </Switch>
+                </Startup>
+            </UserContext.Provider>
+        </Router>
     )
 }

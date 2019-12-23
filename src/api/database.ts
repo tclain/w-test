@@ -43,21 +43,21 @@ export const database: Database = {
         '1': {
             done: true,
             title: 'call thierry',
-            user: 'tclain@gmail.com',
+            user: '1',
             id: '1',
             property: '1',
         },
         '2': {
             done: true,
             title: 'eat some chocolate',
-            user: 'tclain@gmail.com',
+            user: '1',
             id: '2',
             property: '2',
         },
         '3': {
             done: false,
             title: 'eat some doughnuts',
-            user: 'thierry@usewalter.com',
+            user: '1',
             id: '3',
             property: '2',
         },
@@ -70,19 +70,32 @@ export const database: Database = {
  * @param obj
  */
 
-export function add<Record extends Entity>(
-    collectionName: CollectionName,
-    obj: Record
-): Promise<Record> {
-    const id = obj.id || uniqId()
-    database[collectionName][id] = { ...obj, id }
-
-    return Promise.resolve(database[id])
+export function add<Record extends Entity>(collectionName: CollectionName) {
+    return (obj: Record): Promise<Record> => {
+        const id = obj.id || uniqId()
+        database[collectionName][id] = { ...obj, id }
+        return Promise.resolve(database[id])
+    }
 }
 
-export function remove(collectionName: CollectionName, id: ID) {
-    if (!database[collectionName][id]) throw new RecordNotFound()
-    delete database[collectionName][id]
+export function update<Record extends Entity>(collectionName: CollectionName) {
+    return (obj: Partial<Record>): Promise<Record> => {
+        const id = obj.id
+        const existing = database[collectionName][id]
+        if (!existing) throw new RecordNotFound()
 
-    return Promise.resolve(true)
+        const newobject = { ...existing, ...obj, id }
+        database[collectionName][id] = newobject
+
+        return Promise.resolve(newobject as Record)
+    }
+}
+
+export function remove(collectionName: CollectionName) {
+    return (id: ID) => {
+        if (!database[collectionName][id]) throw new RecordNotFound()
+        delete database[collectionName][id]
+
+        return Promise.resolve(true)
+    }
 }
