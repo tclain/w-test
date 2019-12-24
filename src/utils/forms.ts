@@ -24,13 +24,16 @@ export interface IValidationState<Form extends {}> {
  */
 export function computeValidationState<Form extends {}>(
     form: Form,
-    validations: IFormConfig<Form>['validations']
+    validations: IFormConfig<Form>['validations'],
+    touched: {}
 ): IValidationState<Form> {
     // convert the validation map to an array of [key, boolean] indicates the validation state of the given field
     const validationsStates = toPairs(form).map(([field, fieldValue]) => [
         field,
         // if the validation exists compute the validation state of the field, defaults to true
-        validations[field] ? validations[field](fieldValue) : true,
+        validations[field]
+            ? touched[field] && validations[field](fieldValue)
+            : true,
     ])
 
     // if one of the fields is in error, the entire form is in error
@@ -52,10 +55,19 @@ export function computeValidationState<Form extends {}>(
  */
 export function useForm<Form extends {}>(config: IFormConfig<Form>) {
     const [form, setForm] = useState(config.defaults)
+    // a field must be in error only if it has been touched
+    const [touched, setTouched] = useState({})
     // at any given state compute the validation state of the fields and the form
-    const validationState = computeValidationState(form, config.validations)
+    const validationState = computeValidationState(
+        form,
+        config.validations,
+        touched
+    )
     // reset the form to the initial valuest
-    const reset = useCallback(() => setForm(config.defaults), [form])
+    const reset = useCallback(() => {
+        setForm(config.defaults)
+        setTouched({})
+    }, [form])
     const submit = useCallback(
         callback => e => {
             e.preventDefault()
@@ -65,8 +77,10 @@ export function useForm<Form extends {}>(config: IFormConfig<Form>) {
     )
 
     // a curried field value setter that let the developper to easily change the value of a field in the form
-    const setField = (fieldName: keyof Form) => value =>
+    const setField = (fieldName: keyof Form) => value => {
         setForm({ ...form, [fieldName]: value })
+        setTouched({ ...touched, [fieldName]: true })
+    }
 
     // generates the necessary props for an input that manages
     const inputProps = useCallback(

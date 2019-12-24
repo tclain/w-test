@@ -1,0 +1,23 @@
+.todos {
+    list-style: none;
+}
+
+.todo,
+.todo-actions .actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.todo-actions > div {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.todo-text {
+}
+.todo-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

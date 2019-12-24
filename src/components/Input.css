@@ -1,0 +1,25 @@
+.input label {
+    display: block;
+}
+
+.input > input {
+    padding: 5px;
+    border: 2px solid #cecece;
+    border-radius: 3px;
+    display: block;
+    width: 100%;
+    font-size: 1.1em;
+}
+
+.input > input:hover {
+    border: 2px solid black;
+}
+
+.error-state {
+    color: red;
+    min-height: 20px;
+}
+
+.input > .error-state.hidden {
+    visibility: hidden;
+}

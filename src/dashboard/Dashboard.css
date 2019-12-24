@@ -1,0 +1,19 @@
+.dashboard {
+}
+
+.columns-layout {
+    display: flex;
+    height: 100vh;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+.columns-layout > div {
+    flex-basis: 20%;
+    border-right: 1px solid #cecece;
+}
+
+.columns-layout .content {
+    flex: 1;
+}

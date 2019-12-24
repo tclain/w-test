@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Property } from '../../api/types'
 import { useProperties, useSelectedProperty } from './data'
+import './Property.css'
 
 export interface IPropertyListProps {
     properties: Property[]
@@ -13,6 +14,7 @@ export const PropertyList: React.FC<IPropertyListProps> = ({
     selected,
     onPropertyClick,
 }) => {
+    console.log(selected)
     return (
         <ul className="properties">
             {properties.map(property => (
@@ -35,10 +37,13 @@ export const PropertiesListContainer = () => {
     const { property, onPropertySelected } = useSelectedProperty()
     const { data } = useProperties()
     return (
-        <PropertyList
-            onPropertyClick={onPropertySelected}
-            properties={data || []}
-            selected={property}
-        />
+        <div className="properties-pane">
+            <h3>Properties</h3>
+            <PropertyList
+                onPropertyClick={onPropertySelected}
+                properties={data || []}
+                selected={property}
+            />
+        </div>
     )
 }

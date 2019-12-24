@@ -3,18 +3,16 @@ import { PropertiesListContainer } from './properties/PropertyList'
 import { Switch, Route } from 'react-router'
 import { TodosContainer } from './todos/Todos'
 import { SelectedPropertyContext } from './properties/data'
-import { Link } from 'react-router-dom'
+import './Dashboard.css'
+import { ModulesList } from './modules/ModulesList'
+import { Logout } from '../auth/Logout'
 
 export const Dashboard = () => {
     return (
-        <div className="dashboard sidebar-layout">
+        <div className="dashboard columns-layout">
             <SelectedPropertyContext.Provider>
-                <div className="modules">
-                    <div className="module-link">
-                        <Link to="/dashboard/todos">Todos</Link>
-                    </div>
-                </div>
                 <PropertiesListContainer />
+                <ModulesList />
                 <div className="content">
                     <Switch>
                         <Route
@@ -24,6 +22,7 @@ export const Dashboard = () => {
                     </Switch>
                 </div>
             </SelectedPropertyContext.Provider>
+            <Logout />
         </div>
     )
 }

@@ -24,7 +24,7 @@ export const login = async (information: ILoginInformation) => {
     if (!passwordMatches(user.password, information.password))
         throw new LoginError()
     persistAuthentication(user)
-    return true
+    return user
 }
 
 /** logout, simply consisting of erasing the persisted auth token */

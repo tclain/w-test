@@ -16,6 +16,7 @@ export function useAsync<Return>(op: (...args: any[]) => Promise<Return>) {
             setLoading(true)
             const result = await op(...args)
             setData(result)
+            return result
         } catch (e) {
             setError(e)
         } finally {

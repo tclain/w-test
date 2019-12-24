@@ -1,0 +1,42 @@
+.modules-pane {
+    flex-basis: 80px !important;
+}
+
+.modules {
+    padding-left: 0px;
+    list-style: none;
+    margin: 0px;
+}
+.modules li {
+    border-bottom: 1px solid #cecece;
+}
+
+.modules li:hover,
+.modules li:hover > a,
+.module-link.selected {
+    background-color: black;
+    color: white;
+}
+
+.module-link.selected a {
+    color: white !important;
+}
+
+.module-link {
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modules li > a,
+.modules li > a:visited {
+    text-decoration: none;
+    color: black;
+}
+
+.module-selected {
+    background-color: black;
+    color: white;
+}

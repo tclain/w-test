@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { definedAndNotVoid } from '../utils/string'
-import { statement } from '@babel/template'
+import './Input.css'
 
 export interface IInputProps
     extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
@@ -22,14 +22,14 @@ export const Input: React.FC<IInputProps> = ({
     const validError = definedAndNotVoid(error)
     return (
         <div className="input">
-            <label htmlFor={name}></label>
+            <label htmlFor={name}>{label}</label>
             <input
                 name={name}
                 // we extract the value by convenience for the user
                 onChange={e => onChange(e.target.value)}
                 {...props}
             />
-            {validError && <div className="error-state">{error}</div>}
+            <div className={'error-state'}>{error}</div>
         </div>
     )
 }

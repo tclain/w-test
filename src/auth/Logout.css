@@ -1,0 +1,7 @@
+.logout {
+    z-index: 2;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    margin-right: 0px;
+}

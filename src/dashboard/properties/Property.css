@@ -1,0 +1,27 @@
+.properties-pane {
+    background-color: #8ec5fc;
+    background-image: linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%);
+}
+.properties {
+    margin-top: 10px;
+    list-style: none;
+    padding-left: 0px;
+    margin: 0px;
+}
+
+.properties > li {
+    padding: 10px;
+    transition: 0.2s ease-in-out;
+}
+
+.properties > li:hover {
+    background-color: #21d4fd;
+    background-image: linear-gradient(19deg, #21d4fd 0%, #b721ff 100%);
+
+    cursor: pointer;
+}
+
+.properties > li.selected {
+    background-color: #21d4fd;
+    background-image: linear-gradient(19deg, #21d4fd 0%, #b721ff 100%);
+}

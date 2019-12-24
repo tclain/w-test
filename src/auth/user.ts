@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { fetchPersistedAuthenticationState } from '../api'
+import { fetchPersistedAuthenticationState, logout } from '../api'
 import { useLocation, useHistory } from 'react-router'
 import { User } from '../api/types'
 import { contextFromHook } from '../utils/context'
@@ -32,4 +32,13 @@ export const useAuthentication = () => {
     useEffect(() => {
         fetchAuthentication({ location, history, setUser })
     }, [])
+}
+
+export const uselogout = () => {
+    const history = useHistory()
+    const logoutAction = () => {
+        logout()
+        history.push('/login')
+    }
+    return logoutAction
 }

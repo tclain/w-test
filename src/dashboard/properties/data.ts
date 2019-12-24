@@ -11,15 +11,33 @@ import { useHistory } from 'react-router'
  */
 export const useProperties = () => {
     const { user } = UserContext.use()
-    const asyncProperties = useAsync<Property[]>(() =>
-        getPropertiesForUser(user.email)
-    )
+    const { setProperty } = SelectedPropertyContext.use()
+    const asyncProperties = useAsync<Property[]>(async () => {
+        const properties = await getPropertiesForUser(user.email)
+        setProperty(properties[0])
+        return properties
+    })
+
     useEffect(() => {
-        if (user) asyncProperties.run()
+        console.log('user changed', user)
+        if (user) {
+            asyncProperties.run()
+        }
     }, [user])
     return asyncProperties
 }
 
+/**
+ * sharing the currently selected property
+ */
+export const SelectedPropertyContext = contextFromHook(() => {
+    const [property, setProperty] = useState<Property>()
+    return { property, setProperty }
+})
+
+/**
+ *
+ */
 export const useSelectedProperty = () => {
     const { property, setProperty } = SelectedPropertyContext.use()
     const history = useHistory()
@@ -33,8 +51,3 @@ export const useSelectedProperty = () => {
         onPropertySelected,
     }
 }
-
-export const SelectedPropertyContext = contextFromHook(() => {
-    const [property, setProperty] = useState<Property>()
-    return { property, setProperty }
-})
