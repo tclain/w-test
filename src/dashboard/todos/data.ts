@@ -22,6 +22,7 @@ export const useTodos = () => {
         return todos
     })
 
+    // EXAMPLE OF FORM HANDLING FOR an entity
     const removeTodoAsync = useAsync(async id => {
         setTodos(todos.filter(todo => todo.id !== id))
         await deleteTodo(id)
