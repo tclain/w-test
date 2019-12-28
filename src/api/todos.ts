@@ -7,7 +7,6 @@ export const getTodosForUserAndProperty = async (
     propertyId: ID
 ) => {
     await delay(800)
-    console.log(Object.values(database.todos))
     return Object.values(database.todos).filter(
         todo => todo.user === userId && todo.property === propertyId
     )
