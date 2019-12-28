@@ -64,9 +64,6 @@ export const TodoItem: React.FC<ITodoItemProps> = ({
                     <div className="action" onClick={() => onRemove(todo.id)}>
                         delete
                     </div>
-                    <div className="action" onClick={() => setEditing(true)}>
-                        edit
-                    </div>
                 </div>
             )}
         </li>

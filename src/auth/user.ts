@@ -19,7 +19,7 @@ export const UserContext = contextFromHook(() => {
     const [user, setUser] = useState<User>(null)
     return {
         user,
-        setUser,
+        setUser: (u) => setUser(u) ,
     }
 })
 
